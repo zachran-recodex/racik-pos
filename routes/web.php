@@ -16,13 +16,15 @@ Route::controller(MainController::class)->group(function () {
 
 });
 
-Route::view('dashboard', 'dashboard')
+Route::view('dashboard', 'dashboard.index')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
+
+        Route::view('order', 'dashboard.order')->name('order');
 
         Route::prefix('administrator')->name('administrator.')->group(function (){
 

@@ -1,12 +1,26 @@
-<flux:sidebar sticky stashable class="border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-    <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
+<flux:sidebar sticky class="w-20 border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
 
-    <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-        <x-app-logo />
+    <a href="{{ route('dashboard') }}" class="w-full flex aspect-square size-8 items-center justify-center rounded-md bg-accent-content text-accent-foreground" wire:navigate>
+        <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
     </a>
 
-    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
+    <flux:navlist.item :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+        <flux:icon.home />
+    </flux:navlist.item>
 
+    <flux:tooltip content="Manage Orders" position="right">
+        <flux:navlist.item :href="route('dashboard.order')" :current="request()->routeIs('dashboard.order')" wire:navigate>
+            <flux:icon.shopping-bag />
+        </flux:navlist.item>
+    </flux:tooltip>
+
+    <flux:tooltip content="Manage Categories" position="right">
+        <flux:navlist.item :href="route('dashboard.category')" :current="request()->routeIs('dashboard.category')" wire:navigate>
+            <flux:icon.briefcase />
+        </flux:navlist.item>
+    </flux:tooltip>
+
+<!--
     @if(auth()->user()->hasRole(['Super Admin', 'Admin']))
     <flux:navlist variant="outline">
         <flux:navlist.group expandable heading="Administrator" class="grid">
@@ -26,51 +40,5 @@
         </flux:navlist.group>
     </flux:navlist>
     @endif
-
-    <flux:spacer />
-
-    <!-- Desktop User Menu -->
-    <flux:dropdown position="bottom" align="start">
-        <flux:profile
-            :name="auth()->user()->name"
-            :initials="auth()->user()->initials()"
-            icon-trailing="chevrons-up-down"
-        />
-
-        <flux:menu class="w-[220px]">
-            <flux:menu.radio.group>
-                <div class="p-0 text-sm font-normal">
-                    <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                        <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                            <span
-                                class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                            >
-                                {{ auth()->user()->initials() }}
-                            </span>
-                        </span>
-
-                        <div class="grid flex-1 text-start text-sm leading-tight">
-                            <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                            <span class="truncate text-xs">{{ auth()->user()->email }}</span>
-                        </div>
-                    </div>
-                </div>
-            </flux:menu.radio.group>
-
-            <flux:menu.separator />
-
-            <flux:menu.radio.group>
-                <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>Settings</flux:menu.item>
-            </flux:menu.radio.group>
-
-            <flux:menu.separator />
-
-            <form method="POST" action="{{ route('logout') }}" class="w-full">
-                @csrf
-                <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                    Log Out
-                </flux:menu.item>
-            </form>
-        </flux:menu>
-    </flux:dropdown>
+-->
 </flux:sidebar>
