@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('central_users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 255);
-            $table->string('email', 255)->unique();
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['super_admin', 'support'])->default('support');
             $table->rememberToken();
             $table->timestamps();
-
-            $table->index('email');
-            $table->index('role');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -46,7 +42,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('central_users');
+        Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
